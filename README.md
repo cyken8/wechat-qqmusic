@@ -1,6 +1,4 @@
-# sleep-frontend
-
-> Sandman-frontend
+# wechat-QQmusic
 
 ## Build Setup
 
