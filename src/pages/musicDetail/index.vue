@@ -1,10 +1,14 @@
 <template>
     <div class="main">
       <div class="header">
-        <img src="../../../static/icon/music/backpage.png" style="width: 20px;height: 20px" class="header-back">
-        <div>
-
-        </div>
+        <img src="../../../static/icon/music/backpage.png" style="width: 20px;height: 20px" class="header-back" @click="backPage">
+        <div class="header-title">{{musicTitle}}</div>
+        <img src="../../../static/icon/music/more.png" style="width: 20px;height: 20px" class="header-more">
+      </div>
+      <div class="author">
+        <div style="margin-right: 10px">—</div>
+        <div>{{musicAuthor}}</div>
+        <div style="margin-left: 10px">—</div>
       </div>
       <div class="tag">
         <div class="tag-item">
@@ -15,7 +19,7 @@
         </div>
       </div>
       <div class="circle-author">
-        <div class="circle-image"></div>
+        <img src="../../../static/icon/music/test.jpg" class="circle-image">
       </div>
       <div class="detail">{{musicDetail}}</div>
       <div class="cate">
@@ -52,7 +56,7 @@
           </div>
         </div>
         <div class="footer-play-item">
-          <img src="../../../static/icon/music/single.png" style="width: 20px;height: 20px">
+          <img src="../../../static/icon/music/playlist.png" style="width: 20px;height: 20px">
         </div>
       </div>
       <div class="footer-operation">
@@ -76,7 +80,23 @@
   export default {
     name: "index",
     data: {
-      musicDetail: '书香年华 - 许嵩 （Vae Xu）/孙涛'
+      musicDetail: '书香年华 - 许嵩 （Vae Xu）/孙涛',
+      musicTitle: '书香年华',
+      musicAuthor: '许嵩/孙涛'
+    },
+    methods: {
+      backPage: function() {
+        console.log('test')
+        wx.navigateBack({
+          url: '../../pages/index/main',
+          success: function() {
+            console.log('success')
+          },
+          fail: function() {
+            console.log('fail')
+          }
+        })
+      }
     }
   };
 </script>
@@ -102,7 +122,7 @@
     top: 5px;
     width: 100%;
     height: 50px;
-    background: #e64340;
+    /*background: #e64340;*/
     justify-content: center;
   }
   .header-back {
@@ -111,20 +131,32 @@
     top: 10px;
   }
   .header-title {
-
+    font-size: 25px;
+  }
+  .header-more {
+    position: fixed;
+    right: 15px;
+    top: 10px;
+  }
+  .author {
+    display: flex;
+    position: fixed;
+    top: 50px;
+    font-size: 17px;
   }
   .tag {
     position: fixed;
-    top: 70px;
+    top: 90px;
     width: 50%;
-    height: 40px;
+    height: 30px;
     display: flex;
   }
   .tag-item {
     flex: 1;
     border: 3px solid #ffffff;
     -webkit-border-radius: 7px;
-    margin: 3px;
+    margin-left: 10px;
+    margin-right: 10px;
     display: flex;
     justify-content: center;
     align-items: center;
@@ -161,7 +193,7 @@
     font-size: 17px;
   }
   .cate {
-    width: 70px;
+    width: 60px;
     height: 30px;
     position: fixed;
     display: flex;
