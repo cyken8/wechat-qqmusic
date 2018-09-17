@@ -1,14 +1,16 @@
 <template>
   <div style="text-align: center;min-height: 100%;overflow-y:hidden">
-    <siders v-if="showSider" v-on:showSiderDetail="changeSider"></siders>
+    <!--<siders v-if="showSider" v-on:showSiderDetail="changeSider"></siders>-->
+    <siders v-on:showSiderDetail="changeSider" v-if="showSider"></siders>
     <!--<div>-->
-      <!--<div :style="{ fontSize: postFontSize + 'em' }">-->
-        <!--<Card :text='Myjourney' v-on:enlarge-text="changeSider"></Card>-->
-      <!--</div>-->
+    <!--<div :style="{ fontSize: postFontSize + 'em' }">-->
+    <!--<Card :text='Myjourney' v-on:enlarge-text="changeSider"></Card>-->
+    <!--</div>-->
     <!--</div>-->
     <!--<div class="sider-on" @click="hideSider"></div>-->
     <scroll-view class="scroll" :style="scollStyle">
       <div>
+        <div style="background: black;width: 100%;height: 100px;z-index: 999;opacity: 0.1" @click="hideSider" v-if="showSider"></div>
         <div style="background: #31c37c;height: 80px;">
           <navbar v-on:showSiderDetail="changeSider"></navbar>
           <div class="search">
@@ -85,25 +87,8 @@
                       :authorArray="recommandAuthor" :numberArray="recommandNumber"></Sixrecommand>
       </div>
     </scroll-view>
-    <div class="sider-on"></div>
-    <div class="audio">
-      <!--<audio poster='http://y.gtimg.cn/music/photo_new/T002R300x300M000003rsKF44GyaSk.jpg?max_age=2592000' name="此时此刻" id="myAudio"-->
-      <!--author="许巍" src='http://ws.stream.qqmusic.qq.com/M500001VfvsJ21xFqb.mp3?guid=ffffffff82def4af4b12b3cd9337d5e7&uin=346897220&vkey=6292F51E1E384E06DCBDC9AB7C49FD713D632D313AC4858BACB8DDD29067D3C601481D36E62053BF8DFEAF74C0A5CCFADD6471160CAF3E6A&fromtag=46'-->
-      <!--controls loop></audio>-->
-      <div style="line-height: 80px;margin-left: 10px">
-        <img src="http://y.gtimg.cn/music/photo_new/T002R300x300M000003rsKF44GyaSk.jpg?max_age=2592000" style="width:40px;height: 40px;border-radius: 20px;border:1px solid">
-      </div>
-      <div style="margin-left: 15px;margin-top: 6px">
-        <div style="text-align: left;font-size: 15px">此时此刻</div>
-        <div style="text-align: left;color:#acacac;font-size:12px">许巍</div>
-      </div>
-      <div style="margin-left: 110px;">
-        <canvas canvas-id="playRate" style="width: 30px;height: 30px;"></canvas>
-      </div>
-      <div style="line-height: 70px;float:right;margin-left: 10px">
-        <img src="/static/icon/musicList.png" style="width: 30px;height: 30px"/>
-      </div>
-    </div>
+    <!--<div class="sider-on"></div>-->
+    <music></music>
   </div>
 </template>
 
@@ -113,6 +98,7 @@
   import Sixrecommand from "../../components/Sixrecommand"
   import Expand from "../../components/Expand"
   import siders from "../../components/siders"
+  import music from "../../components/music"
 
   export default {
     data () {
@@ -152,18 +138,19 @@
           '578万','225万','77万','159万','38万'
         ],
         showSider: false
-    }
-  },
+      }
+    },
 
-  components: {
-    Card,
-    navbar,
-    Sixrecommand,
-    Expand,
-    siders
-  },
+    components: {
+      Card,
+      navbar,
+      Sixrecommand,
+      Expand,
+      siders,
+      music
+    },
 
-  methods: {
+    methods: {
       playRate: function () {
         var context = wx.createCanvasContext('playRate')
         context.setFillStyle('red')
@@ -189,38 +176,39 @@
         context.draw()
         console.log('test')
       },
-    changeSider: function (enlargeAmount) {
-      let that = this
-      that.showSider = true
-    },
-    hideSider: function () {
-      let that = this
-      if (that.showSider) {
-        console.log(that.showSider)
+      changeSider: function (enlargeAmount) {
+        let that = this
+        that.showSider = true
+      },
+      hideSider: function () {
+        let that = this
         that.showSider = false
+        // if (that.showSider) {
+        //   console.log(that.showSider)
+        //   that.showSider = false
+        // }
       }
-    }
-  },
+    },
 
-  created () {
-    // 调用应用实例的方法获取全局数据
-    // this.getUserInfo()
-    let that = this
-    that.playRate()
-    wx.getSystemInfo({
-      success: function (res) {
-        that.screenHeight = res.screenHeight
-        that.windowHeight = res.windowHeight
-      }
-    })
-    console.log(that.screenHeight)
-    console.log(that.windowHeight)
-  },
+    created () {
+      // 调用应用实例的方法获取全局数据
+      // this.getUserInfo()
+      let that = this
+      that.playRate()
+      wx.getSystemInfo({
+        success: function (res) {
+          that.screenHeight = res.screenHeight
+          that.windowHeight = res.windowHeight
+        }
+      })
+      console.log(that.screenHeight)
+      console.log(that.windowHeight)
+    },
     onReady: function () {
       // let that = this
       // that.list = this.selectComponent('#listA')
     }
-}
+  }
 </script>
 
 <style scoped>
@@ -231,43 +219,43 @@
     /*height: 504px;*/
   }
   /*.icon {*/
-    /*color: #32c27c;*/
+  /*color: #32c27c;*/
   /*}*/
-.userinfo {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-}
+  .userinfo {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
 
-.userinfo-avatar {
-  width: 128rpx;
-  height: 128rpx;
-  margin: 20rpx;
-  border-radius: 50%;
-}
+  .userinfo-avatar {
+    width: 128rpx;
+    height: 128rpx;
+    margin: 20rpx;
+    border-radius: 50%;
+  }
 
-.userinfo-nickname {
-  color: #aaa;
-}
+  .userinfo-nickname {
+    color: #aaa;
+  }
 
-.usermotto {
-  margin-top: 150px;
-}
+  .usermotto {
+    margin-top: 150px;
+  }
 
-.form-control {
-  display: block;
-  padding: 0 12px;
-  margin-bottom: 5px;
-  border: 1px solid #ccc;
-}
+  .form-control {
+    display: block;
+    padding: 0 12px;
+    margin-bottom: 5px;
+    border: 1px solid #ccc;
+  }
 
-.counter {
-  display: inline-block;
-  margin: 10px auto;
-  padding: 5px 10px;
-  color: blue;
-  border: 1px solid blue;
-}
+  .counter {
+    display: inline-block;
+    margin: 10px auto;
+    padding: 5px 10px;
+    color: blue;
+    border: 1px solid blue;
+  }
   .img-item {
     height: 200px;
     width: 100%;
@@ -287,15 +275,15 @@
     margin-left: 10px;
     position: absolute;
   }
-.sider-on {
-  z-index: 100;
-  position:relative;
-  background: black;
-  opacity: 0.3;
-  /*opacity: 0.4;*/
-  width: 100%;
-  height: 1000px;
-}
+  .sider-on {
+    z-index: 100;
+    position:relative;
+    background: black;
+    opacity: 0.3;
+    /*opacity: 0.4;*/
+    width: 100%;
+    height: 1000px;
+  }
   .category {
     /*border: 2px solid #888888;*/
     width: 94%;
@@ -422,15 +410,5 @@
   .playlist-item {
     flex: 1;
     margin-top: 3px;
-  }
-  .audio {
-    width: 100%;
-    background: white;
-    height: 60px;
-    position: fixed;
-    bottom: 0;
-    border: 1px solid #f5f5f5;
-    display: flex;
-    z-index: 99;
   }
 </style>
