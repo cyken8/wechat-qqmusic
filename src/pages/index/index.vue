@@ -1,5 +1,6 @@
 <template>
   <div style="text-align: center;min-height: 100%;overflow-y:hidden">
+    <!--<div :class="{{ showSider == true?'test1':'test2'}}">test</div>-->
     <!--<siders v-if="showSider" v-on:showSiderDetail="changeSider"></siders>-->
     <siders v-on:showSiderDetail="changeSider" v-if="showSider"></siders>
     <!--<div>-->
@@ -212,6 +213,12 @@
 </script>
 
 <style scoped>
+  .test1 {
+    background: #e64340;
+  }
+  .test2 {
+    background: #586c94;
+  }
   .scroll {
     /*overflow: auto;*/
     overflow-y: scroll;
